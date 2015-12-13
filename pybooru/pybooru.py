@@ -116,12 +116,15 @@ class Pybooru(object):
         if requests.get(url+"/posts.json").status_code == 200:
             # TODO code if danbooru v2
             self.base_api = API_BASE_URL_2
+            self.api_type = "dan2"
         elif requests.get(url+"/post.json").status_code == 200:
             # TODO code if moebooru
             self.base_api = API_BASE_URL_MOE
+            self.api_type = "moe"
         elif requests.get(url+"/post/index.json").status_code == 200:
             # TODO code if danbooru v1
             self.base_api = API_BASE_URL_1
+            self.api_type = "dan1"
         else:
             raise PybooruError("API not currently supported in this module")
 
@@ -215,6 +218,9 @@ class Pybooru(object):
         except ValueError as err:
             raise PybooruError("JSON Error: {0} in line {1} column {2}".format(
                 err.msg, err.lineno, err.colno))
+
+    def get_api_type(self):
+        return self.api_type
 
     def posts_list(self, tags=None, limit=100, page=1):
         """Get a list of posts.
