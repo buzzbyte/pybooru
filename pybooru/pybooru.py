@@ -573,6 +573,15 @@ class Pybooru(object):
         response = self._build_request_url('artists_destroy', params)
         return response['success']
 
+    def comments_show(self, id_):
+        """Get a specific comment.
+        Parameters:
+            id_:
+            The id number of the comment to retrieve (Type: INT).
+        """
+        params = {'id': id_}
+        return self._build_request_url('comments_show', params)
+    
     def comments_create(self, post_id, comment_body):
         """Action to lets you create a comment (Requires login).
 
