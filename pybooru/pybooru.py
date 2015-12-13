@@ -139,7 +139,11 @@ class Pybooru(object):
             params = {}
 
         # Create url
-        url    = self.site_url + self.base_api[api_name]['url']
+        if 'id' in params:
+            url = self.site_url + self.base_api[api_name]['url'].replace("id", params['id'])
+        else:
+            url = self.site_url + self.base_api[api_name]['url']
+            
         method = self.base_api[api_name]['method']
 
         # Build AUTENTICATION hash_string
@@ -232,6 +236,17 @@ class Pybooru(object):
 
         return self._build_request_url('posts_list', params)
 
+    def post_show(self, id_):
+        """Get a specific post.
+
+        Parameters:
+            id_:
+                The id number of the post to retrieve (Type: INT).
+        """
+        params = {'id': id_}
+        return self._build_request_url('post_show', params)
+
+    
     def posts_create(self, tags, file_=None, rating=None, source=None,
                      is_rating_locked=None, is_note_locked=None,
                      parent_id=None, md5=None):
@@ -557,16 +572,6 @@ class Pybooru(object):
         params = {'id': id_}
         response = self._build_request_url('artists_destroy', params)
         return response['success']
-
-    def comments_show(self, id_):
-        """Get a specific comment.
-
-        Parameters:
-            id_:
-                The id number of the comment to retrieve (Type: INT).
-        """
-        params = {'id': id_}
-        return self._build_request_url('comments_show', params)
 
     def comments_create(self, post_id, comment_body):
         """Action to lets you create a comment (Requires login).
