@@ -9,7 +9,7 @@ from __future__ import unicode_literals
 # pyborru exceptions imports
 from .exceptions import PybooruError
 # pybooru resources imports
-from .resources import (API_BASE_URL, SITE_LIST)
+from .resources import *
 
 # requests imports
 import requests
@@ -79,6 +79,7 @@ class Pybooru(object):
                 self._site_name_validator(self.site_name)
             elif site_url is not "":
                 self._url_validator(self.site_url)
+                self._check_booru_api(self.site_url) # Check which API to use.
         else:
             raise PybooruError("Unexpected empty strings,"
                                " specify parameter site_name or site_url.")
@@ -124,6 +125,19 @@ class Pybooru(object):
         else:
             raise PybooruError("Invalid URL scheme, use HTTP or HTTPS", url=url)
 
+    def _check_booru_api(self, url):
+        if requests.get(url+"/posts.json").status_code == 200:
+            # TODO code if danbooru v2
+            self.base_api = API_BASE_URL_2
+        elif requests.get(url+"/post.json").status_code == 200:
+            # TODO code if moebooru
+            self.base_api = API_BASE_URL_MOE
+        elif requests.get(url+"/post/index.json").status_code == 200:
+            # TODO code if danbooru v1
+            self.base_api = API_BASE_URL_1
+        else:
+            raise PybooruError("API not currently supported in this module")
+
     def _build_request_url(self, api_name, params=None):
         """Function for build url.
 
@@ -138,11 +152,12 @@ class Pybooru(object):
             params = {}
 
         # Create url
-        url = self.site_url + API_BASE_URL[api_name]['url']
+        url    = self.site_url + self.base_api[api_name]['url']
+        method = self.base_api[api_name]['method']
 
         # Build AUTENTICATION hash_string
         # Check if hash_string exists
-        if API_BASE_URL[api_name]['required_login'] is True:
+        if self.base_api[api_name]['required_login'] is True:
             if self.site_name in list(SITE_LIST.keys()) or \
                     self.hash_string is not "":
 
@@ -173,10 +188,10 @@ class Pybooru(object):
                     "Specify the hash_string parameter of the Pybooru"
                     " object, for the functions which require login.")
 
-        return self._json_request(url, params)
+        return self._json_request(url, params, method)
 
     @staticmethod
-    def _json_request(url, params):
+    def _json_request(url, params, method="GET"):
         """Function to read and returning JSON response.
 
         Parameters:
@@ -191,8 +206,13 @@ class Pybooru(object):
 
         try:
             # Request
-            response = requests.post(url, params=params, headers=headers,
-                                     timeout=60)
+            response = requests.get(url, params=params, headers=headers, timeout=60)
+            if method == "GET":
+                response = requests.get(url, params=params, headers=headers, timeout=60)
+            elif method == "POST":
+                response = requests.post(url, params=params, headers=headers, timeout=60)
+            elif method == "PUT":
+                response = requests.put(url, params=params, headers=headers, timeout=60)
             # Enable raise status error
             response.raise_for_status()
             # Read and return JSON data

@@ -1,9 +1,11 @@
 # Pybooru - Library for Danbooru/Moebooru API.
-[![Build Status](https://travis-ci.org/LuqueDaniel/pybooru.svg?branch=master)](https://travis-ci.org/LuqueDaniel/pybooru)
+A fork of [Pybooru](http://github.com/LuqueDaniel/pybooru) by Daniel Luque.
 
 **Pybooru** is a Python library to access API of Danbooru/Moebooru based sites.
 
-- Version: **3.0.1**
+This fork adds the missing API for Danbooru v2 and a few others.
+
+- Version: **3.1.0**
 - Licensed under: **MIT License**
 
 ## Dependencies.
@@ -11,17 +13,6 @@
 - [requests.](http://docs.python-requests.org/en/latest/)
 
 ## Installation
-### from Python Package Index (Pypi)
-Pypi - Python Package Index:
-[Pybooru on Pypi.](https://pypi.python.org/pypi/Pybooru/)
-
-```bash
-sudo pip install Pybooru
-```
-or
-```bash
-sudo easy_install Pybooru
-```
 
 ### Manual installation
 ```bash
@@ -63,10 +54,7 @@ client = Pybooru('konachan.com', username='your-username', password='your-passwo
 client.comments_create(post_id=id, comment_body='Comment content')
 ```
 
-[More examples.](https://github.com/LuqueDaniel/pybooru/tree/master/examples)
-
-## CI Report
-- https://travis-ci.org/LuqueDaniel/pybooru
+[More examples.](https://github.com/buzzbyte/pybooru/tree/master/examples)
 
 ## License
 - **[See MIT License](https://github.com/LuqueDaniel/pybooru/blob/master/LICENSE)**
