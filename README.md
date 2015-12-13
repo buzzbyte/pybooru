@@ -16,7 +16,7 @@ This fork adds the missing API for Danbooru v2 and a few others.
 
 ### Manual installation
 ```bash
-git clone git://github.com/luquedaniel/pybooru.git
+git clone git://github.com/buzzbyte/pybooru.git
 cd pybooru
 sudo python setup.py build
 sudo python setup.py install
@@ -57,4 +57,4 @@ client.comments_create(post_id=id, comment_body='Comment content')
 [More examples.](https://github.com/buzzbyte/pybooru/tree/master/examples)
 
 ## License
-- **[See MIT License](https://github.com/LuqueDaniel/pybooru/blob/master/LICENSE)**
+- **[See MIT License](https://github.com/buzzbyte/pybooru/blob/master/LICENSE)**

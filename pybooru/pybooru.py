@@ -1,25 +1,12 @@
 # -*- coding: utf-8 -*-
-
 """This module contains pybooru object class."""
 
-# __furute__ imports
-from __future__ import absolute_import
-from __future__ import unicode_literals
-
-# pyborru exceptions imports
-from .exceptions import PybooruError
-# pybooru resources imports
-from .resources import *
-
-# requests imports
-import requests
-
-# hashlib imports
-import hashlib
-
-# re imports
-import re
-
+from __future__ import absolute_import,unicode_literals # get some features not yet in python 3
+from .exceptions import PybooruError                    # get the exception call 
+from .resources import *                                # import the dictionaries 
+import requests                                         # import the http module 
+import hashlib                                          # import the hash module 
+import re                                               # import the regular expression module
 
 class Pybooru(object):
     """Pybooru main class.
