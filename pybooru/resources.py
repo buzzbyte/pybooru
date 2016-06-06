@@ -10,12 +10,16 @@ http_status_codes:
     Is a dict that contains the http status code for Danbooru/Moebooru API.
 """
 
-
 # Default SITE_LIST
 SITE_LIST = {
     'konachan': {
         'url': "http://konachan.com",
         'hashed_string': "So-I-Heard-You-Like-Mupkids-?--{0}--"},
+
+    'danbooru': {
+        'url': "https://danbooru.donmai.us",
+        'hashed_string': "nil"
+    },
 
     'yandere': {
         'url': "https://yande.re",
@@ -354,4 +358,4 @@ HTTP_STATUS_CODES = {
     424: ("Invalid Parameters", "The given parameters were invalid"),
     500: ("Internal Server Error", "Some unknown error occurred on the server"),
     503: ("Service Unavailable", "Server cannot currently handle the request")
-    }
+}

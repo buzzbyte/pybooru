@@ -81,6 +81,7 @@ class Pybooru(object):
         """
         if site_name in list(SITE_LIST.keys()):
             self.site_url = SITE_LIST[site_name]['url']
+            self._check_booru_api(self.site_url)
         else:
             raise PybooruError(
                 "The site name is not valid, use the site_url parameter")
